@@ -68,6 +68,12 @@ public class Data {
         return cursor;
     }
 
+    public void setCursor(final int pos){
+        if(pos < 0 || pos > pieces.size()-1)
+            throw new IllegalArgumentException("Cursor must be [0, pieceCount)");
+        cursor = pos;
+    }
+
     public <T> Piece<T> get(){
         if(cursor > pieces.size() - 1)
             cursor = 0;
