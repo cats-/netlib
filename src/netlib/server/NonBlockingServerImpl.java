@@ -54,15 +54,20 @@ class NonBlockingServerImpl implements ServerImpl{
             if(key.isAcceptable()){
                 try{
                     accept();
-                }catch(Exception ex){}
+                }catch(Exception ex){
+                    ex.printStackTrace();
+                }
             }else if(key.isReadable()){
                 final NonBlockingConnection con = (NonBlockingConnection) key.attachment();
                 try{
                     read(con);
                 }catch(Exception ex){
+                    ex.printStackTrace();
                     try{
                         con.close();
-                    }catch(Exception e){}
+                    }catch(Exception e){
+                        e.printStackTrace();
+                    }
                     server.leave(con);
                 }
             }

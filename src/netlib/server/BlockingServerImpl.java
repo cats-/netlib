@@ -40,6 +40,7 @@ class BlockingServerImpl implements ServerImpl{
                                 final Data data = con.read();
                                 server.handleData(con, data);
                             }catch(Exception ex){
+                                ex.printStackTrace();
                                 try{
                                     con.close();
                                 }catch(Exception ex2){}

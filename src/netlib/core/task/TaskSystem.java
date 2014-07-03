@@ -16,5 +16,6 @@ public class TaskSystem {
 
     public void shutdown(){
         timer.cancel();
+        timer.purge();
     }
 }

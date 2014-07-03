@@ -130,15 +130,19 @@ public abstract class Server extends Connectable{
         final Thread t = new Thread(
                 new Runnable(){
                     public void run(){
-                        while(impl.isConnected()){
+                        while(isConnected()){
                             try{
                                 if(!impl.loop())
                                     break;
-                            }catch(Exception ex){}
+                            }catch(Exception ex){
+                                ex.printStackTrace();
+                            }
                         }
                         try{
-                            impl.close();
-                        }catch(Exception ex){}
+                            close();
+                        }catch(Exception ex){
+                            ex.printStackTrace();
+                        }
                         for(final ServerListener l : listeners)
                             l.onFinish(Server.this);
                     }
