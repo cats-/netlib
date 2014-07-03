@@ -85,7 +85,8 @@ public abstract class Client extends Connectable{
                         while(isConnected()){
                             try{
                                 final Data data = read();
-                                if(data != null);
+                                final ClientDataHandler handler = getHandler(data.getOpcode());
+                                handle(handler != null ? handler : defaultHandler, data);
                             }catch(Exception ex){
                                 try{
                                     close();
@@ -100,6 +101,16 @@ public abstract class Client extends Connectable{
         );
         t.setPriority(Thread.MAX_PRIORITY);
         t.start();
+    }
+
+    private void handle(final ClientDataHandler handler, final Data data){
+        if(handler == null)
+            return;
+        try{
+            handler.handle(this, data);
+        }catch(Exception ex){
+            handler.handleException(this, data, ex);
+        }
     }
 
     private Data read() throws Exception{
