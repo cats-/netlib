@@ -1,7 +1,6 @@
 package netlib.core.task;
 
 import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 
 public abstract class Task implements Runnable{
 
@@ -10,9 +9,9 @@ public abstract class Task implements Runnable{
 
     final TimerTask tt;
 
-    public Task(final int delay, final long period, final TimeUnit unit){
+    public Task(final int delay, final long period){
         this.delay = delay;
-        this.period = unit.toMillis(period);
+        this.period = period;
 
         tt = new TimerTask(){
             public void run(){
@@ -21,12 +20,8 @@ public abstract class Task implements Runnable{
         };
     }
 
-    public Task(final long period, final TimeUnit unit){
-        this(0, period, unit);
-    }
-
     public Task(final long period){
-        this(period, TimeUnit.MILLISECONDS);
+        this(0, period);
     }
 
     public int getDelay(){
