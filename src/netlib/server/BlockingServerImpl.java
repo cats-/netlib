@@ -38,8 +38,7 @@ class BlockingServerImpl implements ServerImpl{
                         while(con.isConnected()){
                             try{
                                 final Data data = con.read();
-                                if(data != null)
-                                    server.handleData(con, data);
+                                server.handleData(con, data);
                             }catch(Exception ex){
                                 try{
                                     con.close();

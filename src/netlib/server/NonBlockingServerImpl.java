@@ -42,8 +42,7 @@ class NonBlockingServerImpl implements ServerImpl{
 
     private void read(final NonBlockingConnection con) throws Exception{
         final Data data = con.read();
-        if(data != null)
-            server.handleData(con, data);
+        server.handleData(con, data);
     }
 
     public boolean loop() throws Exception{
