@@ -84,10 +84,17 @@ public abstract class Server extends Connectable{
 
     void handleData(final Connection con, final Data data){
         final ServerDataHandler handler = getHandler(data.getOpcode());
-        if(handler != null)
+        handle(handler != null ? handler : defaultHandler, con, data);
+    }
+
+    private void handle(final ServerDataHandler handler, final Connection con, final Data data){
+        if(handler == null)
+            return;
+        try{
             handler.handle(this, con, data);
-        else if(defaultHandler != null)
-            defaultHandler.handle(this, con, data);
+        }catch(Exception ex){
+            handler.handleException(this, con, data, ex);
+        }
     }
 
     public Connection[] getConnections(){
