@@ -13,4 +13,8 @@ public class TaskSystem {
     public void submit(final Task task){
         timer.scheduleAtFixedRate(task.tt, task.getDelay(), task.getPeriod());
     }
+
+    public void shutdown(){
+        timer.cancel();
+    }
 }
