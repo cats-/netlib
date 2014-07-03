@@ -9,30 +9,18 @@ import netlib.core.codec.Codecs;
 
 public class Data {
 
-    public static final class Piece<T>{
+    private static class Piece<T>{
 
         private final Codec<T> codec;
         private final T value;
 
-        public Piece(final Codec<T> codec, final T value){
+        private Piece(final Codec<T> codec, final T value){
             this.codec = codec;
             this.value = value;
         }
 
-        public Piece(final short id, final T value){
-            this(Codecs.get(id), value);
-        }
-
-        public Piece(final T value){
+        private Piece(final T value){
             this(Codecs.get(value.getClass()), value);
-        }
-
-        public Codec<T> getCodec(){
-            return codec;
-        }
-
-        public T getValue(){
-            return value;
         }
     }
 
@@ -74,22 +62,14 @@ public class Data {
         cursor = pos;
     }
 
-    public <T> Piece<T> get(){
+    public <T> T get(){
         if(cursor > pieces.size() - 1)
             cursor = 0;
         return get(cursor++);
     }
 
-    public <T> Piece<T> get(final int i){
-        return pieces.get(i);
-    }
-
-    public <T> T getValue(final int i){
-        return this.<T>get(i).value;
-    }
-
-    public <T> T getValue(){
-        return this.<T>get().value;
+    public <T> T get(final int i){
+        return (T)pieces.get(i).value;
     }
 
     public Piece[] getPieces(){
