@@ -5,7 +5,11 @@ import netlib.core.data.handler.DataHandler;
 import netlib.server.Server;
 import netlib.server.connection.Connection;
 
-public interface ServerDataHandler<T extends Server> extends DataHandler{
+public abstract class ServerDataHandler<T extends Server> implements DataHandler{
 
-    public void handle(final T server, final Connection connection, final Data data);
+    public abstract void handle(final T server, final Connection connection, final Data data) throws Exception;
+
+    public void handleException(final T server, final Connection connection, final Data data, final Exception ex){
+        ex.printStackTrace();
+    }
 }
