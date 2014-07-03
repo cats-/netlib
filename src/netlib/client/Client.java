@@ -132,6 +132,7 @@ public abstract class Client extends Connectable{
     }
 
     public void close() throws Exception{
+        taskSystem.shutdown();
         output.close();
         input.close();
         socket.close();

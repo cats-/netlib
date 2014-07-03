@@ -149,6 +149,7 @@ public abstract class Server extends Connectable{
     }
 
     public void close() throws Exception{
+        taskSystem.shutdown();
         impl.close();
     }
 
