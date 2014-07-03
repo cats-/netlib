@@ -2,6 +2,7 @@ package netlib.server;
 
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -99,6 +100,18 @@ public abstract class Server extends Connectable{
 
     public Connection[] getConnections(){
         return connections.toArray(new Connection[connections.size()]);
+    }
+
+    public void sendToAll(final Data data) throws Exception{
+        for(final Connection con : connections)
+            con.send(data);
+    }
+
+    public void sendToAllExcept(final Data data, final Connection... exceptions) throws Exception{
+        final List<Connection> ex = Arrays.asList(exceptions);
+        for(final Connection con : connections)
+            if(!ex.contains(con))
+                con.send(data);
     }
 
     public InetSocketAddress getAddress(){
